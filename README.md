@@ -78,3 +78,6 @@ Write 1234567890
 Read: 1234567890
 Read with wrong pass: [��5�Q�h
 ```
+
+And you can see in /tmp two files: *test_encrypt_file* and *test_encrypt_file.encrypt*. 
+Check them for actual encrypting.

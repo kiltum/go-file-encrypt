@@ -10,6 +10,8 @@ import (
 	"os"
 )
 
+var extension = ".encrypt"
+
 func deriveKey(passphrase string, salt []byte) ([]byte, []byte) {
 	if salt == nil {
 		salt = make([]byte, 8)
@@ -20,7 +22,7 @@ func deriveKey(passphrase string, salt []byte) ([]byte, []byte) {
 }
 
 // encrypt file on pat by password and aes256
-func encryptFile(path, password string) error {
+func EncryptFile(path, password string) error {
 	inFile, err := os.Open(path)
 	if err != nil {
 		return err
@@ -37,7 +39,7 @@ func encryptFile(path, password string) error {
 	var iv [aes.BlockSize]byte
 	stream := cipher.NewOFB(block, iv[:])
 
-	outFile, err := os.OpenFile(path+".encrypt", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
+	outFile, err := os.OpenFile(path+extension, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}
@@ -53,7 +55,7 @@ func encryptFile(path, password string) error {
 }
 
 // decrypt encrypted file
-func decryptFile(path, password string) error {
+func DecryptFile(path, password string) error {
 	salt := []byte(password)
 	key, _ := deriveKey(password, salt)
 
@@ -71,7 +73,7 @@ func decryptFile(path, password string) error {
 	var iv [aes.BlockSize]byte
 	stream := cipher.NewOFB(block, iv[:])
 
-	outFile, err := os.OpenFile(path[:len(path)-8], os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
+	outFile, err := os.OpenFile(path[:len(path)-len(extension)], os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}

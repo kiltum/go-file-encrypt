@@ -3,6 +3,7 @@ package go_file_encrypt
 import (
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/rand"
 	"crypto/sha256"
 	"golang.org/x/crypto/pbkdf2"
 	"io"

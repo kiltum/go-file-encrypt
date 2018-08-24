@@ -18,8 +18,7 @@ import (
 
 
 func main () {
-	gfe.EncryptFile("/tmp/test", "password")
-
+	
 	d1 := []byte("1234567890")
 	file := "/tmp/test_encrypt_file"
 	file_pass := "123456"
